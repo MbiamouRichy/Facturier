@@ -27,7 +27,7 @@ export class Datas {
     </div>
     <div class="col-md-6 text-right">
         <p class="font-weight-bold mb-1">${this.documentType === "invoice" ? "Facture" : "Devis"}<span class="font-weight-normal">Num ${Math.floor(Math.random() * 100)}</span></p>
-        <p class="font-weight-bold mb-1">Date <span class="font-weight-normal">${this.date.toDateString}</span></p>
+        <p class="font-weight-bold mb-1">Date <span class="font-weight-normal">${this.date.toDateString()}</span></p>
     </div>
     </div>
 
