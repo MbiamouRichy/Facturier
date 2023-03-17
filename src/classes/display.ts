@@ -27,6 +27,6 @@ export class display implements HasRender{
         }
 
         this.hiddenDiv.classList.remove('invisible');
-        this.formContainer.innerHTML = ""
+        this.formContainer.innerHTML = "";
     }
 }
