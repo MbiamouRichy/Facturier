@@ -1,5 +1,6 @@
 import { Datas } from '../classes/data.js';
 import { display } from "./display.js";
+import { Print } from "./print.js";
 export class FormInput {
     constructor() {
         this.form = document.getElementById('form');
@@ -16,11 +17,20 @@ export class FormInput {
         this.tva = document.getElementById('tva');
         this.docContainer = document.getElementById('document-container');
         this.hiddenDiv = document.getElementById('hiddenDiv');
+        this.btnPrint = document.getElementById('print');
         this.submitFormListener();
+        this.PrintListener(this.btnPrint, this.docContainer);
     }
     // Listeners
     submitFormListener() {
         this.form.addEventListener('submit', this.handleFormSubmit.bind(this));
+    }
+    PrintListener(btn, docContainer) {
+        btn.addEventListener('click', () => {
+            let availableDoc;
+            availableDoc = new Print(docContainer);
+            availableDoc.print();
+        });
     }
     handleFormSubmit(e) {
         e.preventDefault();
@@ -32,7 +42,7 @@ export class FormInput {
             let date = new Date();
             docData = new Datas(type, firstName, lastName, address, country, town, zip, product, price, quantity, tva, date);
             let template;
-            template = new display(this.docContainer, this.hiddenDiv);
+            template = new display(this.docContainer, this.hiddenDiv, this.btnPrint);
             template.render(docData, type);
         }
     }

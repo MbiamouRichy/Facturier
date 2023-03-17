@@ -2,6 +2,8 @@ import { HasHtmlFormat } from "../interfaces/HasHtmlFormat.js";
 import {Datas} from '../classes/data.js'
 import { HasRender } from "../interfaces/HasRender.js";
 import { display } from "./display.js";
+import { HasPrint } from "../interfaces/HasPrint.js";
+import { Print } from "./print.js";
 export class FormInput{
     form: HTMLFormElement;
     type: HTMLSelectElement;
@@ -17,6 +19,7 @@ export class FormInput{
     tva: HTMLInputElement;
     docContainer: HTMLDivElement;
     hiddenDiv: HTMLDivElement;
+    btnPrint: HTMLButtonElement
 
     constructor(){
         this.form = document.getElementById('form') as HTMLFormElement;
@@ -32,17 +35,26 @@ export class FormInput{
         this.quantity = document.getElementById('quantity') as HTMLInputElement;
         this.tva = document.getElementById('tva') as HTMLInputElement;
 
-        this.docContainer = document.getElementById('document-container') as HTMLDivElement
-        this.hiddenDiv = document.getElementById('hiddenDiv') as HTMLDivElement
+        this.docContainer = document.getElementById('document-container') as HTMLDivElement;
+        this.hiddenDiv = document.getElementById('hiddenDiv') as HTMLDivElement;
 
+        this.btnPrint = document.getElementById('print') as HTMLButtonElement;
 
-        this.submitFormListener()
+        this.submitFormListener();
+        this.PrintListener(this.btnPrint, this.docContainer)
 
     }
 
     // Listeners
     private submitFormListener(): void {
         this.form.addEventListener('submit', this.handleFormSubmit.bind(this))
+    }
+    private PrintListener(btn: HTMLButtonElement, docContainer: HTMLDivElement){
+        btn.addEventListener('click', () =>{
+            let availableDoc: HasPrint;
+            availableDoc = new Print(docContainer);
+            availableDoc.print()
+        })
     }
     private handleFormSubmit(e: Event){
         e.preventDefault();
@@ -57,7 +69,7 @@ export class FormInput{
 
           docData = new Datas(type, firstName, lastName, address, country, town, zip, product, price, quantity, tva, date);
           let template: HasRender;
-          template = new display(this.docContainer, this.hiddenDiv)
+          template = new display(this.docContainer, this.hiddenDiv, this.btnPrint)
           template.render(docData, type);
         }
 

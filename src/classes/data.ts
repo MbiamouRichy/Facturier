@@ -38,8 +38,8 @@ export class Datas implements HasHtmlFormat{
 <div class="row pb-5 p-5">
     <div class="col-sm-6 text-left">
         <p class="font-weight-bold">Entreprise de Richy</p>
-        <p class="mb-1">22 boulevard Moe Szyslak</p>
-        <p>75008 - Douala</p>
+        <p class="mb-1">22 boulevard de richy</p>
+        <p>Litoral - Douala</p>
         <p class="mb-1">Tél: 00.00.00.00.00</p>
     </div>
 
@@ -79,7 +79,7 @@ export class Datas implements HasHtmlFormat{
 <div class="d-flex flex-row-reverse bg-light p-4">
     <div class="py-3 px-5">
         <div class="mb-2">TOTAL TTC</div>
-        <div class="h2 font-weight-light">${totalPrice.toFixed(2)} €</div>
+        <div class="h2 font-weight-light">${totalPrice.toFixed(2)} Fcfa</div>
     </div>
 </div>
     `
