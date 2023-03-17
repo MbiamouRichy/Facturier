@@ -66,7 +66,7 @@ export class FormInput{
         btn.addEventListener('click', () =>{
             document.location.reload();
             window.scrollTo(0,0);
-        }
+        })
     }
     private handleFormSubmit(e: Event){
         e.preventDefault();

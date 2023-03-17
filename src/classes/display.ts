@@ -1,5 +1,8 @@
 import { HasHtmlFormat } from '../interfaces/HasHtmlFormat'
 import {HasRender} from '../interfaces/HasRender.js'
+import { Storage } from './storage.js'
+
+
 export class display implements HasRender{
 
     formContainer: HTMLDivElement
@@ -14,6 +17,8 @@ export class display implements HasRender{
     render(docObj: HasHtmlFormat, docType: string): void {
         const htmlString: string = docObj.htmlFormat();
         this.container.innerHTML = htmlString;
+
+        new Storage(docType, htmlString)
 
         if(docType === 'invoice'){
             this.btnPrint.innerText = 'Imprimer la facture'
