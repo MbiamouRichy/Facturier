@@ -1,5 +1,5 @@
 import { HasHtmlFormat } from "../interfaces/HasHtmlFormat.js";
-import {Datas} from '../classes/data.js'
+import { Datas } from '../classes/data.js'
 import { HasRender } from "../interfaces/HasRender.js";
 import { display } from "./display.js";
 import { HasPrint } from "../interfaces/HasPrint.js";
@@ -21,6 +21,9 @@ export class FormInput{
     hiddenDiv: HTMLDivElement;
     btnPrint: HTMLButtonElement;
     btnReload: HTMLButtonElement;
+    btnStoredInvoices: HTMLButtonElement;
+    btnStoredEstimates: HTMLButtonElement;
+    storedEl: HTMLDivElement;
 
 
     constructor(){
@@ -39,14 +42,19 @@ export class FormInput{
 
         this.docContainer = document.getElementById('document-container') as HTMLDivElement;
         this.hiddenDiv = document.getElementById('hiddenDiv') as HTMLDivElement;
+        this.storedEl = document.getElementById('stored-data') as HTMLDivElement;
+
 
         this.btnPrint = document.getElementById('print') as HTMLButtonElement;
         this.btnReload = document.getElementById('reload') as HTMLButtonElement;
+        this.btnStoredInvoices = document.getElementById('stored-invoices') as HTMLButtonElement;
+        this.btnStoredEstimates = document.getElementById('stored-estimates') as HTMLButtonElement;
 
 
         this.submitFormListener();
         this.PrintListener(this.btnPrint, this.docContainer);
-        this.deleteListener(this.btnReload, this.docContainer)
+        this.deleteListener(this.btnReload, this.docContainer);
+        this.getStoredDocsListener();
 
 
     }
@@ -67,6 +75,40 @@ export class FormInput{
             document.location.reload();
             window.scrollTo(0,0);
         })
+    }
+    private getStoredDocsListener(): void {
+        this.btnStoredInvoices.addEventListener('click', this.getItems.bind(this, 'invoice'))
+        this.btnStoredEstimates.addEventListener('click', this.getItems.bind(this, 'estimate'))
+    }
+    private getItems(doctype: string){
+        if(this.storedEl.hasChildNodes()){
+            this.storedEl.innerHTML = "";
+        }
+        if(localStorage.getItem(doctype)){
+             let array: string | null;
+             array = localStorage.getItem(doctype);
+             if(array !== null && array.length > 2){
+                let arrayData: string[];
+                arrayData = JSON.parse(array);
+
+                arrayData.map((doc: string): void => {
+                    let card: HTMLDivElement = document.createElement('div');
+                    let cardBody: HTMLDivElement = document.createElement('div');
+                    let cardClasses: Array<string> = ['card', 'mt-5'];
+                    let cardBodyClasses: string = 'card-body';
+                    card.classList.add(...cardClasses);
+                    cardBody.classList.add(cardBodyClasses);
+
+                    cardBody.innerHTML = doc;
+                    card.append(cardBody);
+                    this.storedEl.append(card);
+
+                })
+
+            }else{
+                this.storedEl.innerHTML = '<div class="p-5">Aucune data disponible !</div>'
+            }
+        }
     }
     private handleFormSubmit(e: Event){
         e.preventDefault();
@@ -99,12 +141,12 @@ export class FormInput{
         const quantity = this.quantity.valueAsNumber;
         const tva = this.tva.valueAsNumber;
 
-if( zip > 0 && price > 0 && quantity > 0 && tva > 0){
-   return [type, firstName, lastName, address, country, town, zip, product, price, quantity, tva]
-}else{
-    alert("Les valeurs numeriques doivent etre superieur a zero")
-    return;
-}
+        if( zip > 0 && price > 0 && quantity > 0 && tva > 0){
+           return [type, firstName, lastName, address, country, town, zip, product, price, quantity, tva]
+        }else{
+           alert("Les valeurs numeriques doivent etre superieur a zero")
+           return;
+        }
 
     }
 }

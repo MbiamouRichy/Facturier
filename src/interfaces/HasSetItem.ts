@@ -1,3 +1,3 @@
 export interface HasSetItem {
-    setItem(typeVal: string, htmtString: string): void
+    setItem(typeVal: string, htmlString: string): void ;
 }

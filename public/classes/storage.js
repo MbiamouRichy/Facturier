@@ -1,7 +1,7 @@
 export class Storage {
-    constructor(typeVal, htmtString) {
+    constructor(typeVal, htmlString) {
         this.oldData = [];
-        this.setItem(typeVal, htmtString);
+        this.setItem(typeVal, htmlString);
     }
     static checkLocalStorage() {
         if (localStorage.getItem('invoice') === null) {
@@ -11,12 +11,12 @@ export class Storage {
             localStorage.setItem('estimate', '[]');
         }
     }
-    setItem(typeVal, htmtString) {
+    setItem(typeVal, htmlString) {
         let array;
         array = localStorage.getItem(typeVal);
         if (array !== null) {
             this.oldData = JSON.parse(array);
-            this.oldData.push(htmtString);
+            this.oldData.push(htmlString);
             localStorage.setItem(typeVal, JSON.stringify(this.oldData));
         }
         else {
