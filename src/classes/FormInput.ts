@@ -54,6 +54,7 @@ export class FormInput{
         this.submitFormListener();
         this.PrintListener(this.btnPrint, this.docContainer);
         this.deleteListener(this.btnReload, this.docContainer);
+        this.deleteListener(this.btnReload, this.docContainer);
         this.getStoredDocsListener();
 
 
